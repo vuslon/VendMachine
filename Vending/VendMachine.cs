@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Threading;
 
 namespace Vending
 {
     public class VendMachine : IMachine
     {
-
+        // обявление полей 
         Box _box;
         Screen _screen;
         CashBox _cashBox;
 
-        public VendMachine()
+        // конструктор
+        public VendMachine() 
         {
             _box = new Box();
             _screen = new Screen();
@@ -20,59 +19,62 @@ namespace Vending
             Logic();
         }
 
+
+        //Логика программы
         private void Logic()
         {
-            while (true)
+            while (true) 
             {
+                
                 int prodPos = ShowList();
                 
                 int money = ShowPrice(prodPos);
                 
-                if (money >= _box.Products[prodPos].Price)
+                if (money >= _box.Products[prodPos].Price) //если денег внесли достаточно для покупки товара
                 {
                     int changeMoney = _cashBox.Buy(money, _box.Products[prodPos].Price);
                     TakeResult(prodPos, changeMoney);
                 }
-                else
+                else // если денег недостаточно для оплаты товара
                 {
                     Console.WriteLine("Недостаточно денег");
-                    TakeResult(0, money);
+                    TakeResult(-1, money); // так как в первом значении передаётся индекс Листа и оно может быть равно 0, 
+                                           // то -1 передаётся чтоб не запускался механизм выдачи товара
                 }
               
             }
         }
 
-        private void InitFieldFromBox()
-        {
-             _screen.ListFromScreen = _box.Products;
-        }
-        
 
+        
+        //Начальный экран. Демонстрация наименований.
         public int ShowList()
         {
-            InitFieldFromBox();
+            _screen.ListFromScreen = _box.Products; //Копирование списка товаров из бокса в память экрана
             Console.WriteLine("В кассе {0} руб.", _cashBox.cash);
             int a =_screen.Show();
             Console.Clear();
             return a;
         }
 
+        
         public int ShowPrice(int position)
         {
-           _screen.ShowPrice(position);
-           int a =  _cashBox.GetMoney();
+           _screen.ShowPrice(position);    //Демонстрация цены выбранного товара 
+            int a =  _cashBox.GetMoney();  // и оплата
             Console.Clear();
             return a;
         }
 
+        //Выдача результата (товар, сдача)
         public void TakeResult(int product, int changeMoney)
         {
-            if (product > 0)
+            if (product >= 0) // выдача товара по индексу Листа
             {
                 _box.TakeResult(product);
-                _box.Products[product].Amount--;
+                _box.Products[product].Amount--; 
             }
-            if (changeMoney > 0)
+            if (changeMoney > 0) //выдача сдачи
             {
                 _cashBox.TakeResult(changeMoney);
             }

@@ -7,12 +7,7 @@ namespace Vending
     {
         public List<AProduct> ListFromScreen { get; set; }
 
-        public Screen()
-        {
-             
-        }
-
-        
+       //Демонстрация наименований товара и запрос ID продукта
         public int Show()
         {
             Console.WriteLine("Код:\tНаименование");
@@ -33,17 +28,17 @@ namespace Vending
                 {
                     if (ListFromScreen[i].Id == tmp)
                     {
-                        result = i;
+                        result = i+1;
                         break;
                     }
                 }
                 if (result > 0) break;
             }
 
-            return result;
+            return result-1;
         }
 
-        public void ShowPrice(int position)
+        public void ShowPrice(int position) //Демонстрация цены на желаемый товар
         {
 
 
