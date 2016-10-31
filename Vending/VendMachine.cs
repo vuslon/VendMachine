@@ -50,10 +50,11 @@ namespace Vending
         //Начальный экран. Демонстрация наименований.
         public int ShowList()
         {
+            Console.Clear();
             _screen.ListFromScreen = _box.Products; //Копирование списка товаров из бокса в память экрана
             Console.WriteLine("В кассе {0} руб.", _cashBox.cash);
             int a =_screen.Show();
-            Console.Clear();
+
             return a;
         }
 
@@ -62,13 +63,14 @@ namespace Vending
         {
            _screen.ShowPrice(position);    //Демонстрация цены выбранного товара 
             int a =  _cashBox.GetMoney();  // и оплата
-            Console.Clear();
+            
             return a;
         }
 
         //Выдача результата (товар, сдача)
         public void TakeResult(int product, int changeMoney)
         {
+            Console.Clear();
             if (product >= 0) // выдача товара по индексу Листа
             {
                 _box.TakeResult(product);
@@ -79,7 +81,7 @@ namespace Vending
                 _cashBox.TakeResult(changeMoney);
             }
             Thread.Sleep(7000);
-            Console.Clear();
+           
         }
     }
 }

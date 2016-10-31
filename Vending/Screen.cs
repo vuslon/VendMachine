@@ -10,6 +10,7 @@ namespace Vending
        //Демонстрация наименований товара и запрос ID продукта
         public int Show()
         {
+            
             Console.WriteLine("Код:\tНаименование");
             Console.WriteLine();
 
@@ -41,7 +42,7 @@ namespace Vending
         public void ShowPrice(int position) //Демонстрация цены на желаемый товар
         {
 
-
+            Console.Clear();
             Console.WriteLine("Цена: " + ListFromScreen[position].Price + " руб.");
             Console.WriteLine("Внесите деньги");
            
